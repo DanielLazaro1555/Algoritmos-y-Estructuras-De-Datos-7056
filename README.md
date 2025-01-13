@@ -114,3 +114,96 @@ El curso se desarrolla a través de la plataforma virtual de aprendizaje que se 
 
 El cálculo del promedio final se hará de la siguiente manera:  
 
+**Fórmula:**  
+(20%)PC1 + (20%)PC2 + (20%)PC3 + (40%)PROY  
+
+| **Tipo** | **Descripción**             | **Semana** | **Observación**                      |
+|----------|-----------------------------|------------|--------------------------------------|
+| PC1      | PRÁCTICA CALIFICADA 1       | 3          | Individual                           |
+| PC2      | PRÁCTICA CALIFICADA 2       | 5          | Individual                           |
+| PC3      | PRÁCTICA CALIFICADA 3       | 8          | Individual                           |
+| PROY     | PROYECTO FINAL              | 9          | Evaluación flexible. Proyecto Final |
+
+### **Indicaciones sobre Fórmulas de Evaluación:**  
+1. La nota mínima aprobatoria final es de 12.  
+2. En este curso, no aplica examen rezagado.  
+3. En las evaluaciones flexibles, el estudiante debe elegir si desarrollarla de manera individual o grupal.  
+
+
+
+# Habilidades Clave para el Mercado Laboral
+
+Este curso te permitirá desarrollar habilidades técnicas y conocimientos que son altamente valorados en el mercado laboral, especialmente en roles relacionados con el desarrollo de software, ingeniería de datos, y optimización de sistemas.
+
+## Habilidades Técnicas
+
+1. **Diseño y construcción de estructuras de datos:**
+   - Manejo eficiente de arreglos unidimensionales y bidimensionales.
+   - Implementación de estructuras dinámicas como listas enlazadas, pilas y colas.
+   - Implementación de estructuras no lineales como árboles.
+
+2. **Optimización y eficiencia:**
+   - Conocimiento para optimizar el uso de memoria y recursos computacionales.
+   - Implementación de estructuras avanzadas como árboles AVL y árboles de búsqueda balanceados.
+
+3. **Desarrollo de algoritmos:**
+   - Diseño de algoritmos que resuelvan problemas específicos utilizando estructuras de datos.
+   - Manipulación eficiente de grandes volúmenes de datos.
+
+4. **Lenguajes de programación orientados a objetos:**
+   - Construcción de soluciones en lenguajes como Java, Python, o C++, que son ampliamente usados en la industria.
+
+5. **Manipulación de matrices y operaciones matemáticas:**
+   - Implementación de operaciones avanzadas como el manejo de matrices poco densas, matrices triangulares y matrices simétricas.
+
+6. **Modelado de datos no lineales:**
+   - Representación gráfica y optimización de árboles binarios.
+   - Análisis y desarrollo de estructuras complejas para organizar datos.
+
+---
+
+## Habilidades Transversales (Soft Skills)
+
+1. **Resolución de problemas:**
+   - Enfrentar desafíos técnicos con un enfoque lógico y sistemático.
+
+2. **Trabajo en equipo:**
+   - Participar en proyectos grupales para diseñar e implementar soluciones de software.
+
+3. **Capacidad de aprendizaje autónomo:**
+   - Adquirir nuevos conocimientos relacionados con estructuras y algoritmos avanzados.
+
+4. **Comunicación técnica:**
+   - Documentar soluciones y explicar implementaciones técnicas a equipos interdisciplinarios.
+
+---
+
+## Aplicaciones Prácticas en el Mercado Laboral
+
+1. **Desarrollo de software:**  
+   - Implementación de funcionalidades complejas en aplicaciones de software utilizando estructuras de datos eficientes.
+
+2. **Ingeniería de datos:**  
+   - Diseño y optimización de flujos de datos en bases de datos o pipelines de datos.
+
+3. **Machine Learning y Ciencia de Datos:**  
+   - Uso de estructuras de datos para la manipulación eficiente de datasets y modelos.
+
+4. **Diseño de sistemas backend:**  
+   - Construcción de sistemas robustos para manejar grandes volúmenes de datos y solicitudes simultáneas.
+
+5. **Optimización en videojuegos:**  
+   - Uso de árboles y estructuras dinámicas para mejorar el rendimiento de gráficos y mecánicas del juego.
+
+6. **Ciberseguridad:**  
+   - Implementación de algoritmos que aseguren la integridad y confidencialidad de los datos.
+
+---
+
+**Nota:** Estas habilidades son fundamentales para roles como:
+- Desarrollador de Software.
+- Ingeniero de Datos.
+- Arquitecto de Software.
+- Científico de Datos.
+- Especialista en Sistemas Embebidos.
+
