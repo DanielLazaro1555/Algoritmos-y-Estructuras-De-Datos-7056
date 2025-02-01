@@ -4,6 +4,7 @@ package clases;
  *
  * @author daniel
  */
+// Clase Producto
 public class Producto {
 
     private int id;
@@ -11,7 +12,6 @@ public class Producto {
     private double precio;
     private int cantidad;
 
-    // Constructor
     public Producto(int id, String nombre, double precio, int cantidad) {
         this.id = id;
         this.nombre = nombre;
@@ -34,6 +34,14 @@ public class Producto {
 
     public int getCantidad() {
         return cantidad;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public void setCantidad(int cantidad) {
