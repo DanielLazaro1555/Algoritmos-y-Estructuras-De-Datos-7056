@@ -63,7 +63,7 @@ Este proyecto se desarrolla en el contexto del curso universitario **"Algoritmos
 - **Hardware:** Computadora personal con especificaciones estándar para desarrollo de software.
 - **Software:**
   - Lenguaje de Programación: Java
-  - Entorno de Desarrollo: Apache NetBeans
+  - Entorno de Desarrollo: Apache NetBeans IDE 24
   - Sistema Operativo: Zorin OS (Linux)
 
 ## CAPÍTULO 2 – MARCO TEÓRICO
@@ -168,7 +168,7 @@ El proyecto ha permitido aplicar conceptos teóricos de estructuras de datos en 
 ![Descripción de la imagen](./Imagenes/Sistema%20Operativo/Captura%20desde%202025-02-02%2003-35-11.png)
 ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-38-33.png)
 - Fragmentos de código relevantes que demuestran la implementación de la lógica principal del sistema.
-![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-38-53.png)
+![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-38-33_rescaled.png)
 ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-39-10.png)
 ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-39-42.png)
 ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-40-05.png)
