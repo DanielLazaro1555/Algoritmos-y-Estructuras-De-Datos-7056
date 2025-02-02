@@ -8,22 +8,30 @@ import clases.Prioridad;
 import java.util.Scanner;
 
 /**
+ * Clase que gestiona las operaciones del sistema de tareas pendientes. Permite
+ * agregar, listar, buscar y eliminar tareas, además de validar datos de
+ * entrada.
  *
  * @author daniel
  */
-/**
- * Clase que gestiona las operaciones del sistema de tareas pendientes.
- */
 public class GestorTareas {
 
-    private ListaEnlazada lista;
-    private Scanner scanner = new Scanner(System.in);
+    private ListaEnlazada lista; // Lista enlazada para almacenar las tareas
+    private Scanner scanner = new Scanner(System.in); // Scanner para la entrada de datos del usuario
 
+    /**
+     * Constructor que inicializa la lista enlazada para gestionar las tareas.
+     */
     public GestorTareas() {
         lista = new ListaEnlazada();
     }
 
-    // Método para agregar una tarea con validación de datos
+    /**
+     * Método para agregar una nueva tarea con validación de datos.
+     *
+     * @param descripcion Descripción de la tarea.
+     * @param prioridad Nivel de prioridad de la tarea (Alta, Media, Baja).
+     */
     public void agregarTarea(String descripcion, String prioridad) {
         imprimirLineaDecorativa();
         if (!ValidadorTareas.validarDescripcion(descripcion)) {
@@ -42,7 +50,10 @@ public class GestorTareas {
         pausar();
     }
 
-    // Método para listar todas las tareas pendientes
+    /**
+     * Método para listar todas las tareas pendientes almacenadas en la lista
+     * enlazada.
+     */
     public void listarTareas() {
         imprimirLineaDecorativa();
         lista.listarTareas();
@@ -50,7 +61,12 @@ public class GestorTareas {
         pausar();
     }
 
-    // Método para completar (eliminar) una tarea con sugerencias de coincidencias parciales
+    /**
+     * Método para completar (eliminar) una tarea de la lista. Si la tarea no se
+     * encuentra, sugiere tareas similares.
+     *
+     * @param descripcion Descripción de la tarea a eliminar.
+     */
     public void completarTarea(String descripcion) {
         imprimirLineaDecorativa();
         Tarea tarea = lista.buscarTarea(descripcion);
@@ -65,7 +81,12 @@ public class GestorTareas {
         pausar();
     }
 
-    // Método para sugerir tareas similares si no se encuentra una coincidencia exacta
+    /**
+     * Método privado para sugerir tareas similares si no se encuentra una
+     * coincidencia exacta.
+     *
+     * @param descripcion Descripción de la tarea buscada.
+     */
     private void sugerirTareasSimilares(String descripcion) {
         System.out.println("🔍 ¿Quizás quisiste decir?");
         Nodo actual = lista.getCabeza();
@@ -82,7 +103,12 @@ public class GestorTareas {
         }
     }
 
-    // Método para buscar una tarea por su descripción
+    /**
+     * Método para buscar una tarea por su descripción. Si no se encuentra,
+     * sugiere tareas similares.
+     *
+     * @param descripcion Descripción de la tarea a buscar.
+     */
     public void buscarTarea(String descripcion) {
         imprimirLineaDecorativa();
         Tarea tarea = lista.buscarTarea(descripcion);
@@ -97,19 +123,27 @@ public class GestorTareas {
         pausar();
     }
 
-    // Método para imprimir una línea decorativa
+    /**
+     * Método para imprimir una línea decorativa que separa las secciones de la
+     * interfaz.
+     */
     private void imprimirLineaDecorativa() {
         System.out.println("=====================================");
     }
 
-    // Método para pausar la ejecución y esperar una tecla
+    /**
+     * Método para pausar la ejecución y esperar que el usuario presione Enter
+     * para continuar.
+     */
     private void pausar() {
         System.out.println("Presiona Enter para continuar...");
         scanner.nextLine();
         limpiarPantalla();
     }
 
-    // Método para simular la limpieza de pantalla
+    /**
+     * Método para simular la limpieza de pantalla mediante saltos de línea.
+     */
     private void limpiarPantalla() {
         for (int i = 0; i < 10; i++) {
             System.out.println();
