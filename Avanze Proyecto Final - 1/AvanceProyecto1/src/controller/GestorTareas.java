@@ -17,6 +17,7 @@ import java.util.Scanner;
 public class GestorTareas {
 
     private ListaEnlazada lista; // Lista enlazada para almacenar las tareas
+    private ListaEnlazada historialTareas; // Lista para almacenar las tareas completadas
     private Scanner scanner = new Scanner(System.in); // Scanner para la entrada de datos del usuario
 
     /**
@@ -24,6 +25,7 @@ public class GestorTareas {
      */
     public GestorTareas() {
         lista = new ListaEnlazada();
+        historialTareas = new ListaEnlazada(); // Inicializamos la lista de historial
     }
 
     /**
@@ -68,14 +70,28 @@ public class GestorTareas {
      * @param descripcion Descripción de la tarea a eliminar.
      */
     public void completarTarea(String descripcion) {
-        imprimirLineaDecorativa();
         Tarea tarea = lista.buscarTarea(descripcion);
-        if (tarea != null) {
+        if (tarea != null && tarea.getEstado().equals("En Progreso")) {
+            tarea.setEstado("Completada");
             lista.eliminarTarea(tarea.getDescripcion());
-            System.out.println("✅ Tarea completada y eliminada exitosamente: " + tarea.getDescripcion());
+            historialTareas.agregar(tarea);
+            System.out.println("✅ Tarea completada y movida al historial: " + tarea.getDescripcion());
         } else {
-            System.out.println("❌ Tarea no encontrada.");
-            sugerirTareasSimilares(descripcion);
+            System.out.println("❌ Solo se pueden completar tareas que están en progreso.");
+        }
+    }
+
+    public void mostrarHistorialTareas() {
+        imprimirLineaDecorativa();
+        System.out.println("📜 Historial de Tareas Completadas:");
+        if (historialTareas.getCabeza() == null) {
+            System.out.println("📌 No hay tareas completadas aún.");
+        } else {
+            Nodo actual = historialTareas.getCabeza();
+            while (actual != null) {
+                System.out.println("✔️ " + actual.tarea.getDescripcion() + " | ⏫ Prioridad: " + actual.tarea.getPrioridad());
+                actual = actual.siguiente;
+            }
         }
         imprimirLineaDecorativa();
         pausar();
@@ -103,6 +119,30 @@ public class GestorTareas {
         }
     }
 
+    public void mostrarTareasPorEstado() {
+        System.out.println("📌 Tareas Pendientes:");
+        mostrarPorEstado("Pendiente");
+        System.out.println("\n⏳ Tareas en Progreso:");
+        mostrarPorEstado("En Progreso");
+        System.out.println("\n✅ Tareas Completadas:");
+        mostrarPorEstado("Completada");
+    }
+
+    private void mostrarPorEstado(String estado) {
+        Nodo actual = lista.getCabeza();
+        boolean hayTareas = false;
+        while (actual != null) {
+            if (actual.tarea.getEstado().equals(estado)) {
+                System.out.println("📋 " + actual.tarea.getDescripcion() + " | Prioridad: " + actual.tarea.getPrioridad());
+                hayTareas = true;
+            }
+            actual = actual.siguiente;
+        }
+        if (!hayTareas) {
+            System.out.println("📭 No hay tareas en este estado.");
+        }
+    }
+
     /**
      * Método para buscar una tarea por su descripción. Si no se encuentra,
      * sugiere tareas similares.
@@ -121,6 +161,16 @@ public class GestorTareas {
         }
         imprimirLineaDecorativa();
         pausar();
+    }
+
+    public void moverTareaAEnProgreso(String descripcion) {
+        Tarea tarea = lista.buscarTarea(descripcion);
+        if (tarea != null && tarea.getEstado().equals("Pendiente")) {
+            tarea.setEstado("En Progreso");
+            System.out.println("🔄 Tarea ahora está en progreso: " + tarea.getDescripcion());
+        } else {
+            System.out.println("❌ No se encontró una tarea pendiente con esa descripción.");
+        }
     }
 
     /**
@@ -149,4 +199,21 @@ public class GestorTareas {
             System.out.println();
         }
     }
+
+    /**
+     * Método para mostrar únicamente las tareas pendientes sin pausas ni
+     * decoraciones.
+     */
+    public void mostrarTareasPendientes() {
+        Nodo actual = lista.getCabeza();
+        if (actual == null) {
+            System.out.println("📌 No hay tareas pendientes.");
+            return;
+        }
+        while (actual != null) {
+            System.out.println("📋 " + actual.tarea.getDescripcion() + " | ⏫ Prioridad: " + actual.tarea.getPrioridad());
+            actual = actual.siguiente;
+        }
+    }
+
 }

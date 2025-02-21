@@ -1,5 +1,6 @@
 package view;
 
+import clases.ValidadorTareas;
 import controller.GestorTareas;
 import java.util.Scanner;
 
@@ -11,54 +12,104 @@ public class Menu {
 
     public static void mostrarMenu(GestorTareas gestor) {
         Scanner sc = new Scanner(System.in);
-        int opcion;
+        int opcion = 0;
 
         do {
-            System.out.println("=== Sistema de Gestión de Tareas Pendientes ===");
-            System.out.println("1. Agregar Tarea");
-            System.out.println("2. Listar Tareas");
-            System.out.println("3. Completar Tarea");
-            System.out.println("4. Buscar Tarea");
-            System.out.println("5. Salir");
-            System.out.print("Seleccione una opción: ");
+            imprimirMenu(gestor);
 
-            opcion = sc.nextInt();
-            sc.nextLine(); // Limpiar buffer
+            // Validar entrada del usuario
+            if (sc.hasNextInt()) {
+                opcion = sc.nextInt();
+                sc.nextLine(); // Limpiar buffer
 
-            switch (opcion) {
-                case 1 ->
-                    agregarTarea(gestor, sc);
-                case 2 ->
-                    gestor.listarTareas();
-                case 3 ->
-                    completarTarea(gestor, sc);
-                case 4 ->
-                    buscarTarea(gestor, sc);
-                case 5 ->
-                    System.out.println("Saliendo del sistema...");
-                default ->
-                    System.out.println("Opción no válida.");
+                switch (opcion) {
+                    case 1 ->
+                        agregarTarea(gestor, sc);
+                    case 2 ->
+                        moverTareaAEnProgreso(gestor, sc);
+                    case 3 ->
+                        completarTarea(gestor, sc);
+                    case 4 ->
+                        buscarTarea(gestor, sc);
+                    case 5 ->
+                        gestor.mostrarHistorialTareas();
+                    case 6 -> {
+                        gestor.mostrarTareasPorEstado();
+                        pausar(); // Para evitar que el menú se cierre instantáneamente
+                    }
+                    case 7 ->
+                        System.out.println("Saliendo del sistema...");
+                    default ->
+                        System.out.println("⚠️ Opción no válida. Intente nuevamente.");
+                }
+            } else {
+                System.out.println("\n⚠️ Error: Debe ingresar un número válido.");
+                sc.next(); // Limpiar entrada incorrecta
+                pausar();
             }
-        } while (opcion != 5);
+        } while (opcion != 7); // 🔹 Se cambió la condición para salir correctamente
+    }
+
+    /**
+     * Método para imprimir el menú de opciones y las tareas pendientes.
+     */
+    private static void imprimirMenu(GestorTareas gestor) {
+        System.out.println("\n=== Sistema de Gestión de Tareas Pendientes ===");
+        System.out.println("1. Agregar Tarea");
+        System.out.println("2. Mover Tarea a 'En Progreso'");
+        System.out.println("3. Completar Tarea");
+        System.out.println("4. Buscar Tarea");
+        System.out.println("5. Ver Historial de Tareas Completadas");
+        System.out.println("6. Ver Tareas por Estado");
+        System.out.println("7. Salir");
+
+        // 🔹 Mostrar las tareas pendientes debajo del menú
+        System.out.println("\n📌 Tareas Pendientes actuales:");
+        gestor.mostrarTareasPendientes();
+
+        System.out.print("\nSeleccione una opción: ");
     }
 
     private static void agregarTarea(GestorTareas gestor, Scanner sc) {
-        System.out.print("Descripción de la tarea: ");
+        System.out.print("\nDescripción de la tarea: ");
         String descripcion = sc.nextLine();
-        System.out.print("Prioridad (Alta, Media, Baja): ");
-        String prioridad = sc.nextLine();
+
+        String prioridad;
+        do {
+            System.out.print("Prioridad (Alta, Media, Baja): ");
+            prioridad = sc.nextLine();
+
+            if (!ValidadorTareas.validarPrioridad(prioridad)) {
+                System.out.println("⚠️  Prioridad no válida. Debe ser Alta, Media o Baja.");
+            }
+        } while (!ValidadorTareas.validarPrioridad(prioridad)); // 🔹 Repite hasta que sea válida
+
         gestor.agregarTarea(descripcion, prioridad);
     }
 
     private static void completarTarea(GestorTareas gestor, Scanner sc) {
-        System.out.print("Ingrese la descripción de la tarea a completar: ");
+        System.out.print("\nIngrese la descripción de la tarea a completar: ");
         String descripcion = sc.nextLine();
         gestor.completarTarea(descripcion);
     }
 
     private static void buscarTarea(GestorTareas gestor, Scanner sc) {
-        System.out.print("Ingrese la descripción de la tarea a buscar: ");
+        System.out.print("\nIngrese la descripción de la tarea a buscar: ");
         String descripcion = sc.nextLine();
         gestor.buscarTarea(descripcion);
+    }
+
+    private static void moverTareaAEnProgreso(GestorTareas gestor, Scanner sc) {
+        System.out.print("Ingrese la descripción de la tarea a mover a 'En Progreso': ");
+        String descripcion = sc.nextLine();
+        gestor.moverTareaAEnProgreso(descripcion);
+    }
+
+    /**
+     * Método para pausar la ejecución y permitir al usuario ver los mensajes.
+     */
+    private static void pausar() {
+        System.out.println("\nPresiona Enter para continuar...");
+        new Scanner(System.in).nextLine();
     }
 }
