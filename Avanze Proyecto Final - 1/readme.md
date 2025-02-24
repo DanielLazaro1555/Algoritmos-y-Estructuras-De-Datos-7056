@@ -137,6 +137,90 @@ Se ha avanzado en la implementación de tareas de actualización, eliminación y
 
 La aplicación final integra todos los módulos siguiendo la arquitectura **MVC**, con una estructura de paquetes para `model`, `controller`, `view` y `clases`. Se asegura el correcto funcionamiento mediante pruebas de validación y manejo de errores. Se considera la posibilidad de implementar una **interfaz gráfica** en futuras versiones.
 
+---
+
+### 4.4.1 Validación de Entradas y Manejo de Errores
+
+Para garantizar una interacción fluida con el usuario, se implementaron validaciones en todas las entradas de datos:
+- **Manejo de errores en la selección del menú:** Se evita que el programa falle si el usuario ingresa letras en lugar de números.
+- **Validación de prioridades:** Solo se permiten valores "Alta", "Media" o "Baja".
+- **Sugerencias en caso de errores:** Si un usuario busca una tarea inexistente, el sistema sugiere tareas similares.
+
+---
+
+### 4.4.2 Gestión de Tareas por Estado
+
+Se incorporó la capacidad de gestionar tareas por estado, lo que permite al usuario:
+- **Mover una tarea a "En Progreso"** antes de marcarla como completada.
+- **Listar tareas según su estado:**
+  - 📌 **Tareas Pendientes**
+  - ⏳ **Tareas en Progreso**
+  - ✅ **Tareas Completadas**
+
+Esto permite un mejor control del flujo de trabajo, alineándose con metodologías como **Kanban**.
+
+---
+
+### 4.4.3 Historial de Tareas Completadas
+
+Se añadió la opción de **visualizar un historial de tareas completadas**, permitiendo a los usuarios revisar el progreso del trabajo realizado.
+
+- **Las tareas completadas no se eliminan del sistema, sino que se trasladan al historial.**
+- **El historial puede consultarse en cualquier momento.**
+
+---
+
+### 4.4.4 Exportación de Tareas en PDF
+
+Para mejorar la gestión documental, se implementó la opción de exportar la lista de tareas a un archivo **PDF**, con una estructura organizada y profesional.
+
+#### 📌 Características implementadas:
+- **Encabezado con título y logo** en la parte superior.
+- **Organización por estados:**
+  - 📌 Tareas Pendientes  
+  - ⏳ Tareas en Progreso  
+  - ✅ Tareas Completadas  
+- **Pie de página (footer) con autoría y fecha/hora de generación.**
+
+#### 🛠️ **Implementación Técnica**
+Se utilizó la biblioteca **Apache PDFBox** para la generación del archivo PDF, con los siguientes métodos clave:
+- `exportarTareasAPdf()` → Organiza y formatea el contenido en el PDF.
+- `agregarEncabezado()` → Dibuja la franja superior con el logo y el título.
+- `agregarFooter()` → Inserta el **nombre del autor y la fecha/hora** de generación.
+- `escribirTareasEnPdf()` → Estructura las tareas en el documento.
+
+![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2004-08-15.png)
+
+---
+
+### 4.4.5 Personalización del Formato del PDF
+
+Para mejorar la presentación del documento generado, se añadieron:
+- **Un encabezado con fondo de color azul claro.**
+- **Un logo en la esquina superior derecha.**
+- **Texto del título bien alineado y legible.**
+- **Pie de página centrado con la autoría y fecha de generación.**
+
+Estos cambios garantizan una presentación más profesional del archivo.
+
+---
+
+### 4.4.6 Integración de Marca de Agua
+
+Para reforzar la autenticidad del documento generado, se incluyó una **marca de agua en el pie de página**, que indica la autoría del proyecto y la fecha/hora exacta en que se generó el PDF.
+
+*(Aquí podrías insertar una captura del PDF con la marca de agua).*
+
+---
+
+## 🎯 **¿Qué logramos con estos cambios?**
+✅ **Un sistema más robusto y validado.**  
+✅ **Mejor organización de tareas en estados.**  
+✅ **Exportación profesional en PDF.**  
+✅ **Formato visual mejorado con encabezado, logo y footer.**  
+
+---
+
 ## CAPÍTULO 5 – CIERRE Y DOCUMENTACIÓN
 
 ### 5.1 Versión Final del Producto
@@ -172,3 +256,5 @@ El proyecto ha permitido aplicar conceptos teóricos de estructuras de datos en 
   ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-38-53-1230x791-upscaled.png)
   ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-39-10-1230x791-upscaled.png)
   ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-39-42-1230x791-upscaled.png)
+
+![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2004-08-15.png)

@@ -1,11 +1,36 @@
 package controller;
 
+import java.io.IOException;
+import model.Nodo;
+import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+/* Importamos para exportar a PDF*/
 import model.ListaEnlazada;
 import model.Tarea;
 import model.Nodo;
 import clases.ValidadorTareas;
 import clases.Prioridad;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import java.io.File;
 import java.util.Scanner;
+/* Importamos las clases adicionales para los CRUD */
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.io.IOException;
+/* Importamos para el logo */
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+/* Importamos para la fecha */
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Clase que gestiona las operaciones del sistema de tareas pendientes. Permite
@@ -49,6 +74,8 @@ public class GestorTareas {
         lista.agregar(new Tarea(descripcion, prioridad));
         System.out.println("✅ Tarea agregada exitosamente.");
         imprimirLineaDecorativa();
+
+        exportarTareasATxt(); // 🔹 Se exporta automáticamente después de agregar una tarea
         pausar();
     }
 
@@ -76,8 +103,118 @@ public class GestorTareas {
             lista.eliminarTarea(tarea.getDescripcion());
             historialTareas.agregar(tarea);
             System.out.println("✅ Tarea completada y movida al historial: " + tarea.getDescripcion());
+
+            exportarTareasATxt(); // 🔹 Se exporta automáticamente después de completar una tarea
         } else {
             System.out.println("❌ Solo se pueden completar tareas que están en progreso.");
+        }
+    }
+
+    private void agregarMarcaDeAgua(PDPageContentStream contentStream, PDPage page, PDType0Font font, String texto) throws IOException {
+        contentStream.setFont(font, 14); // 🔹 Reducimos tamaño para que no sea invasivo
+
+        // 🔹 Color gris claro para que se vea como una marca de agua discreta
+        contentStream.setNonStrokingColor(0.6f, 0.6f, 0.6f); // 🔹 Un poco más oscuro para que sea visible
+
+        // 🔹 Posicionar el footer en la parte inferior de la página
+        float pageWidth = page.getMediaBox().getWidth();
+        float posY = 30; // 🔹 Asegura que esté cerca del borde inferior
+
+        contentStream.beginText();
+        contentStream.newLineAtOffset(pageWidth / 3, posY); // 🔹 Centrar horizontalmente
+        contentStream.showText(texto);
+        contentStream.endText();
+
+        // 🔹 Restaurar el color del texto a negro para evitar afectar el contenido
+        contentStream.setNonStrokingColor(0, 0, 0);
+    }
+
+    private void agregarFooter(PDPageContentStream contentStream, PDPage page, PDType0Font font) throws IOException {
+        contentStream.setFont(font, 12); // 🔹 Tamaño del texto en el footer
+        contentStream.setNonStrokingColor(0.6f, 0.6f, 0.6f); // 🔹 Color gris claro
+
+        // 🔹 Obtener la fecha y hora actual
+        LocalDateTime ahora = LocalDateTime.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String fechaHora = ahora.format(formato);
+
+        // 🔹 Texto del footer con fecha y hora
+        String texto = "Proyecto hecho por Daniel Esteban Huaman Lazaro - " + fechaHora;
+
+        // 🔹 Obtener el ancho de la página
+        float pageWidth = page.getMediaBox().getWidth();
+        float posY = 30; // 🔹 Posición cerca del borde inferior
+
+        // 🔹 Medir el ancho del texto para centrarlo
+        float textWidth = font.getStringWidth(texto) / 1000 * 12; // Escalar la fuente correctamente
+
+        // 🔹 Calcular la posición X para que el texto quede centrado
+        float posX = (pageWidth - textWidth) / 2;
+
+        contentStream.beginText();
+        contentStream.newLineAtOffset(posX, posY); // 🔹 Ahora estará completamente centrado
+        contentStream.showText(texto);
+        contentStream.endText();
+
+        // 🔹 Restaurar el color del texto a negro para evitar afectar el contenido
+        contentStream.setNonStrokingColor(0, 0, 0);
+    }
+
+    public void exportarTareasAPdf() {
+        String nombreArchivo = "tareas_exportadas.pdf";
+        File archivo = new File(nombreArchivo);
+
+        // Elimina el archivo si ya existe
+        if (archivo.exists()) {
+            archivo.delete();
+        }
+
+        try (PDDocument document = new PDDocument()) {
+            PDPage page = new PDPage(PDRectangle.A4);
+            document.addPage(page);
+
+            PDType0Font font = PDType0Font.load(document, new File("fonts/NotoSans-Regular.ttf"));
+
+            try (PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.OVERWRITE, true, true)) {
+
+                // 🔹 Dibujar el encabezado de color en la parte superior
+                float headerHeight = 50;
+                contentStream.setNonStrokingColor(173 / 255f, 216 / 255f, 230 / 255f); // 🔹 Color azul claro
+                contentStream.addRect(0, page.getMediaBox().getHeight() - headerHeight, page.getMediaBox().getWidth(), headerHeight);
+                contentStream.fill();
+
+                // 🔹 Restaurar color a negro
+                contentStream.setNonStrokingColor(0, 0, 0);
+
+                // 🔹 Cargar y colocar el logo dentro del encabezado
+                PDImageXObject logo = PDImageXObject.createFromFile("src/resources/logo2.png", document);
+                float logoWidth = 40;  // 🔹 Ajustar tamaño del logo
+                float logoHeight = 40;
+                float logoX = page.getMediaBox().getWidth() - logoWidth - 10; // 🔹 Posición en la esquina derecha
+                float logoY = page.getMediaBox().getHeight() - logoHeight - 5;
+                contentStream.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+
+                // 🔹 Agregar el título "Gestión de Tareas" en el encabezado
+                contentStream.setFont(font, 14);
+                contentStream.beginText();
+                contentStream.newLineAtOffset(20, page.getMediaBox().getHeight() - 30); // 🔹 Posición en la izquierda
+                contentStream.showText("Sistema de Gestión de Tareas Pendientes");
+                contentStream.endText();
+
+                // 🔹 Agregar el contenido después del encabezado
+                int y = 700;
+                y = escribirTareasEnPdf(contentStream, "Tareas Pendientes:", "Pendiente", y, font);
+                y = escribirTareasEnPdf(contentStream, "Tareas en Progreso:", "En Progreso", y, font);
+                y = escribirTareasEnPdf(contentStream, "Tareas Completadas:", "Completada", y, font);
+
+                // 🔹 Agregar el footer con "Proyecto hecho por Daniel Huaman"
+                agregarFooter(contentStream, page, font);
+            }
+
+            document.save(nombreArchivo);
+            System.out.println("✅ PDF exportado correctamente con encabezado, logo y footer: " + nombreArchivo);
+        } catch (IOException e) {
+            System.out.println("❌ Error al exportar a PDF: " + e.getMessage());
         }
     }
 
@@ -95,6 +232,177 @@ public class GestorTareas {
         }
         imprimirLineaDecorativa();
         pausar();
+    }
+
+    public void exportarTareasATxt() {
+        String nombreArchivo = "tareas_exportadas.txt";
+
+        System.out.println("📂 Exportando tareas a: " + nombreArchivo);
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivo))) {
+            writer.println("=== Lista de Tareas ===\n");
+
+            // Guardar tareas pendientes
+            writer.println("📌 Tareas Pendientes:");
+            guardarTareasPorEstado(writer, "Pendiente");
+
+            // Guardar tareas en progreso
+            writer.println("\n⏳ Tareas en Progreso:");
+            guardarTareasPorEstado(writer, "En Progreso");
+
+            // Guardar tareas completadas
+            writer.println("\n✅ Tareas Completadas:");
+            guardarTareasPorEstado(writer, "Completada");
+
+            System.out.println("✅ Tareas exportadas correctamente.");
+        } catch (IOException e) {
+            System.out.println("❌ Error al exportar tareas: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Método auxiliar para escribir tareas de un estado específico en el
+     * archivo.
+     */
+    private void guardarTareasPorEstado(PrintWriter writer, String estado) {
+        Nodo actual = lista.getCabeza();
+        boolean hayTareas = false;
+
+        while (actual != null) {
+            if (actual.tarea.getEstado().equals(estado)) {
+                String tareaTexto = "📋 " + actual.tarea.getDescripcion() + " | Prioridad: " + actual.tarea.getPrioridad();
+                writer.println(tareaTexto);
+                System.out.println("📝 Guardando tarea: " + tareaTexto); // Depuración
+                hayTareas = true;
+            }
+            actual = actual.siguiente;
+        }
+
+        if (!hayTareas) {
+            writer.println("📭 No hay tareas en este estado.");
+        }
+    }
+
+    /**
+     * Método auxiliar para escribir y mostrar tareas de un estado específico.
+     */
+    private void guardarTareasPorEstado(PrintWriter writer, String estado, boolean mostrarEnConsola) {
+        Nodo actual = lista.getCabeza();
+        boolean hayTareas = false;
+
+        while (actual != null) {
+            if (actual.tarea.getEstado().equals(estado)) {
+                String tareaTexto = "📋 " + actual.tarea.getDescripcion() + " | Prioridad: " + actual.tarea.getPrioridad();
+                writer.println(tareaTexto);
+                if (mostrarEnConsola) {
+                    System.out.println(tareaTexto);
+                }
+                hayTareas = true;
+            }
+            actual = actual.siguiente;
+        }
+
+        if (!hayTareas) {
+            writer.println("📭 No hay tareas en este estado.");
+            if (mostrarEnConsola) {
+                System.out.println("📭 No hay tareas en este estado.");
+            }
+        }
+    }
+
+    private String eliminarEmojis(String texto) {
+        return texto.replaceAll("[^\\p{ASCII}]", ""); // 🔹 Elimina cualquier carácter fuera del estándar ASCII
+    }
+
+    /**
+     * Método auxiliar escribe las tareas dentro del PDF en la posición
+     * correcta.
+     */
+    private int escribirTareasEnPdf(PDPageContentStream contentStream, String titulo, String estado, int startY, PDType0Font font) throws IOException {
+        contentStream.setFont(font, 14); // Tamaño de fuente mayor
+        int y = startY;
+
+        // Escribir el título de la sección
+        contentStream.beginText();
+        contentStream.newLineAtOffset(100, y);
+        contentStream.showText(eliminarEmojis(titulo));
+        contentStream.endText();
+
+        y -= 40; // Espacio después del título
+
+        boolean hayTareas = false;
+        Nodo actual = lista.getCabeza();
+        while (actual != null) {
+            if (actual.tarea.getEstado().equals(estado)) {
+                hayTareas = true;
+                String descripcionLimpia = eliminarEmojis(actual.tarea.getDescripcion());
+                String prioridadLimpia = eliminarEmojis(actual.tarea.getPrioridad());
+
+                contentStream.beginText();
+                contentStream.newLineAtOffset(120, y);
+                contentStream.showText(descripcionLimpia + " | Prioridad: " + prioridadLimpia);
+                contentStream.endText();
+
+                y -= 30; // Espaciado entre cada tarea
+            }
+            actual = actual.siguiente;
+        }
+
+        if (!hayTareas) {
+            contentStream.beginText();
+            contentStream.newLineAtOffset(120, y);
+            contentStream.showText("No hay tareas en este estado.");
+            contentStream.endText();
+            y -= 30;
+        }
+
+        y -= 50; // Espacio extra antes de la siguiente sección
+        return y;
+    }
+
+    public void cargarTareasDesdeTxt() {
+        String nombreArchivo = "tareas_exportadas.txt";
+
+        System.out.println("📂 Intentando cargar tareas desde: " + nombreArchivo);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
+            String linea;
+            String estadoActual = ""; // Almacena en qué sección del archivo estamos leyendo
+
+            while ((linea = reader.readLine()) != null) {
+                System.out.println("🔍 Leyendo línea: " + linea); // Depuración
+
+                if (linea.startsWith("📌 Tareas Pendientes:")) {
+                    estadoActual = "Pendiente";
+                } else if (linea.startsWith("⏳ Tareas en Progreso:")) {
+                    estadoActual = "En Progreso";
+                } else if (linea.startsWith("✅ Tareas Completadas:")) {
+                    estadoActual = "Completada";
+                } else if (linea.startsWith("📋")) { // Detectar líneas con tareas
+                    String[] partes = linea.split("\\|"); // Separar descripción y prioridad
+
+                    if (partes.length == 2) {
+                        String descripcion = partes[0].replace("📋", "").trim();
+                        String prioridad = partes[1].replace("Prioridad:", "").trim();
+
+                        Tarea tarea = new Tarea(descripcion, prioridad);
+                        tarea.setEstado(estadoActual); // 🔹 Establecemos el estado correcto
+
+                        // 🔹 Agregar la tarea a la lista correspondiente
+                        if (estadoActual.equals("Pendiente") || estadoActual.equals("En Progreso")) {
+                            lista.agregar(tarea);
+                            System.out.println("✅ Tarea agregada: " + descripcion + " | " + prioridad);
+                        } else if (estadoActual.equals("Completada")) {
+                            historialTareas.agregar(tarea);
+                            System.out.println("✅ Tarea completada agregada al historial: " + descripcion);
+                        }
+                    }
+                }
+            }
+            System.out.println("✅ Tareas cargadas desde el archivo.");
+        } catch (IOException e) {
+            System.out.println("⚠️  No se encontró el archivo. Se iniciará con una lista vacía.");
+        }
     }
 
     /**
@@ -168,6 +476,8 @@ public class GestorTareas {
         if (tarea != null && tarea.getEstado().equals("Pendiente")) {
             tarea.setEstado("En Progreso");
             System.out.println("🔄 Tarea ahora está en progreso: " + tarea.getDescripcion());
+
+            exportarTareasATxt(); // 🔹 Se exporta automáticamente después de mover una tarea
         } else {
             System.out.println("❌ No se encontró una tarea pendiente con esa descripción.");
         }

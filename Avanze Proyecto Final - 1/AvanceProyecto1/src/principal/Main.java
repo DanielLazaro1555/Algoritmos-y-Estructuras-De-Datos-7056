@@ -22,6 +22,7 @@ public class Main {
     public static void main(String[] args) {
         // Se crea una instancia del GestorTareas, que gestiona la lógica de las tareas
         GestorTareas gestor = new GestorTareas();
+        gestor.cargarTareasDesdeTxt();
 
         // Se muestra el menú principal de la aplicación para interactuar con el usuario
         Menu.mostrarMenu(gestor);

@@ -35,19 +35,27 @@ public class Menu {
                         gestor.mostrarHistorialTareas();
                     case 6 -> {
                         gestor.mostrarTareasPorEstado();
-                        pausar(); // Para evitar que el menú se cierre instantáneamente
+                        pausar();
                     }
-                    case 7 ->
-                        System.out.println("Saliendo del sistema...");
+                    case 7 -> {
+                        gestor.exportarTareasAPdf(); // 🔹 Exporta a PDF
+                        pausar();
+                    }
+                    case 8 -> {
+                        System.out.println("👋 Saliendo del sistema...");
+                        return;
+                    }
                     default ->
                         System.out.println("⚠️ Opción no válida. Intente nuevamente.");
                 }
+
             } else {
                 System.out.println("\n⚠️ Error: Debe ingresar un número válido.");
                 sc.next(); // Limpiar entrada incorrecta
                 pausar();
             }
-        } while (opcion != 7); // 🔹 Se cambió la condición para salir correctamente
+        } while (true); // 🔹 Se quita la condición anterior y se usa return para salir
+        // 🔹 Se cambió la condición para salir correctamente
     }
 
     /**
@@ -61,9 +69,9 @@ public class Menu {
         System.out.println("4. Buscar Tarea");
         System.out.println("5. Ver Historial de Tareas Completadas");
         System.out.println("6. Ver Tareas por Estado");
-        System.out.println("7. Salir");
+        System.out.println("7. Exportar Tareas a PDF"); // 🔹 Nueva opción
+        System.out.println("8. Salir");
 
-        // 🔹 Mostrar las tareas pendientes debajo del menú
         System.out.println("\n📌 Tareas Pendientes actuales:");
         gestor.mostrarTareasPendientes();
 
