@@ -29,6 +29,7 @@
   - [3.2 Descripción del Problema](#32-descripción-del-problema)
   - [3.3 Alcance del Proyecto](#33-alcance-del-proyecto)
 - [CAPÍTULO 4 – IMPLEMENTACIÓN DE ESTRATEGIA](#capítulo-4--implementación-de-estrategia)
+
   - [4.1 Lista de Requerimientos](#41-lista-de-requerimientos)
   - [4.2 Prototipo Preliminar](#42-prototipo-preliminar)
   - [4.3 Prototipo Funcional](#43-prototipo-funcional)
@@ -221,7 +222,6 @@ Estos cambios garantizan una presentación más profesional del archivo.
 Para reforzar la autenticidad del documento generado, se incluyó una **marca de agua en el pie de página**, que indica la autoría del proyecto y la fecha/hora exacta en que se generó el PDF.
 
 ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2004-23-39.png)
-
 
 ---
 
