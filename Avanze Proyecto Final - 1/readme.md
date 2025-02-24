@@ -339,6 +339,7 @@ El proyecto ha permitido aplicar conceptos teóricos de estructuras de datos en 
 
 - Enlace a la diapositiva en la plataforma Canva para su visualización a través del siguiente enlace:  
   🔗 [Visualización en Canva](https://www.canva.com/design/DAGgAaqTLgs/QoBd7QM6oTtVLMi9DN8m6Q/edit?utm_content=DAGgAaqTLgs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+  ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2005-30-08.png)
 
 - Capturas de pantalla del sistema en funcionamiento en Apache NetBeans sobre Zorin OS.
   ![Descripción de la imagen](./Imagenes/Sistema%20Operativo/Captura%20desde%202025-02-02%2003-35-11-750x572-upscaled.png)
