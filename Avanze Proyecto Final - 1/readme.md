@@ -33,6 +33,13 @@
   - [4.2 Prototipo Preliminar](#42-prototipo-preliminar)
   - [4.3 Prototipo Funcional](#43-prototipo-funcional)
   - [4.4 Desarrollo de la Aplicación](#44-desarrollo-de-la-aplicación)
+    - [4.4.1 Validación de Entradas y Manejo de Errores](#441-validación-de-entradas-y-manejo-de-errores)
+    - [4.4.2 Gestión de Tareas por Estado](#442-gestión-de-tareas-por-estado)
+    - [4.4.3 Historial de Tareas Completadas](#443-historial-de-tareas-completadas)
+    - [4.4.4 Exportación de Tareas en PDF](#444-exportación-de-tareas-en-pdf)
+    - [4.4.5 Personalización del Formato del PDF](#445-personalización-del-formato-del-pdf)
+    - [4.4.6 Integración de Marca de Agua](#446-integración-de-marca-de-agua)
+
 - [CAPÍTULO 5 – CIERRE Y DOCUMENTACIÓN](#capítulo-5--cierre-y-documentación)
   - [5.1 Versión Final del Producto](#51-versión-final-del-producto)
   - [5.2 Manuales de Usuario](#52-manuales-de-usuario)
@@ -142,6 +149,7 @@ La aplicación final integra todos los módulos siguiendo la arquitectura **MVC*
 ### 4.4.1 Validación de Entradas y Manejo de Errores
 
 Para garantizar una interacción fluida con el usuario, se implementaron validaciones en todas las entradas de datos:
+
 - **Manejo de errores en la selección del menú:** Se evita que el programa falle si el usuario ingresa letras en lugar de números.
 - **Validación de prioridades:** Solo se permiten valores "Alta", "Media" o "Baja".
 - **Sugerencias en caso de errores:** Si un usuario busca una tarea inexistente, el sistema sugiere tareas similares.
@@ -151,6 +159,7 @@ Para garantizar una interacción fluida con el usuario, se implementaron validac
 ### 4.4.2 Gestión de Tareas por Estado
 
 Se incorporó la capacidad de gestionar tareas por estado, lo que permite al usuario:
+
 - **Mover una tarea a "En Progreso"** antes de marcarla como completada.
 - **Listar tareas según su estado:**
   - 📌 **Tareas Pendientes**
@@ -175,15 +184,18 @@ Se añadió la opción de **visualizar un historial de tareas completadas**, per
 Para mejorar la gestión documental, se implementó la opción de exportar la lista de tareas a un archivo **PDF**, con una estructura organizada y profesional.
 
 #### 📌 Características implementadas:
+
 - **Encabezado con título y logo** en la parte superior.
 - **Organización por estados:**
-  - 📌 Tareas Pendientes  
-  - ⏳ Tareas en Progreso  
-  - ✅ Tareas Completadas  
+  - 📌 Tareas Pendientes
+  - ⏳ Tareas en Progreso
+  - ✅ Tareas Completadas
 - **Pie de página (footer) con autoría y fecha/hora de generación.**
 
 #### 🛠️ **Implementación Técnica**
+
 Se utilizó la biblioteca **Apache PDFBox** para la generación del archivo PDF, con los siguientes métodos clave:
+
 - `exportarTareasAPdf()` → Organiza y formatea el contenido en el PDF.
 - `agregarEncabezado()` → Dibuja la franja superior con el logo y el título.
 - `agregarFooter()` → Inserta el **nombre del autor y la fecha/hora** de generación.
@@ -196,6 +208,7 @@ Se utilizó la biblioteca **Apache PDFBox** para la generación del archivo PDF,
 ### 4.4.5 Personalización del Formato del PDF
 
 Para mejorar la presentación del documento generado, se añadieron:
+
 - **Un encabezado con fondo de color azul claro.**
 - **Un logo en la esquina superior derecha.**
 - **Texto del título bien alineado y legible.**
@@ -209,15 +222,16 @@ Estos cambios garantizan una presentación más profesional del archivo.
 
 Para reforzar la autenticidad del documento generado, se incluyó una **marca de agua en el pie de página**, que indica la autoría del proyecto y la fecha/hora exacta en que se generó el PDF.
 
-*(Aquí podrías insertar una captura del PDF con la marca de agua).*
+_(Aquí podrías insertar una captura del PDF con la marca de agua)._
 
 ---
 
 ## 🎯 **¿Qué logramos con estos cambios?**
+
 ✅ **Un sistema más robusto y validado.**  
 ✅ **Mejor organización de tareas en estados.**  
 ✅ **Exportación profesional en PDF.**  
-✅ **Formato visual mejorado con encabezado, logo y footer.**  
+✅ **Formato visual mejorado con encabezado, logo y footer.**
 
 ---
 
