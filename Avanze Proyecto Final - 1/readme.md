@@ -78,45 +78,121 @@ Este proyecto se desarrolla en el contexto del curso universitario **"Algoritmos
 
 ### 2.1 Tecnologías para Desarrollo de Software
 
-El sistema está desarrollado en **Java**, un lenguaje orientado a objetos que permite gestionar estructuras de datos de manera eficiente. Se utiliza **Apache NetBeans** como entorno de desarrollo integrado (IDE) debido a su compatibilidad con proyectos en Java y sus herramientas de depuración. **Zorin OS**, un sistema operativo basado en Linux, proporciona un entorno estable para el desarrollo.
+El sistema está desarrollado en **Java**, un lenguaje de programación orientado a objetos que permite una gestión eficiente de estructuras de datos y facilita la modularidad del código. Se emplea **Apache NetBeans** como entorno de desarrollo integrado (IDE), seleccionado por su compatibilidad con proyectos en Java y sus herramientas avanzadas de depuración.
+
+El desarrollo del sistema se realizó en **Zorin OS**, un sistema operativo basado en **Linux**, proporcionando un entorno estable y optimizado para la programación en Java. Además, se utilizó **Apache PDFBox** para la generación de documentos en formato PDF, permitiendo la exportación de tareas de manera estructurada.
+
+---
 
 ### 2.2 Arquitecturas de Software
 
-Se emplea una arquitectura basada en el patrón **MVC (Modelo-Vista-Controlador)**, que separa la lógica de negocio, la interfaz de usuario y el acceso a los datos.
+El sistema sigue una arquitectura basada en el patrón **Modelo-Vista-Controlador (MVC)**, lo que permite una separación clara de responsabilidades:
+
+- **Modelo (Model):** Maneja la estructura de datos y la lógica de negocio (gestión de tareas, prioridades y estados).
+- **Vista (View):** Gestiona la interacción con el usuario mediante un menú de consola, mostrando información de manera organizada.
+- **Controlador (Controller):** Actúa como intermediario entre el modelo y la vista, ejecutando las operaciones necesarias según la entrada del usuario.
+
+El uso de **MVC** facilita la escalabilidad del sistema, permitiendo futuras mejoras como la incorporación de una interfaz gráfica.
+
+---
 
 ### 2.3 Metodologías de Desarrollo de Software
 
-Se utiliza una **metodología ágil** con iteraciones cortas para validar el avance del proyecto y ajustar funcionalidades según el feedback recibido.
+El proyecto sigue una **metodología ágil**, enfocada en el desarrollo iterativo y la mejora continua. Se realizaron implementaciones en pequeños ciclos, validando constantemente el funcionamiento del sistema y ajustando funcionalidades según el feedback recibido.
+
+#### 📌 Relación con Kanban:
+
+Dentro del marco de metodologías ágiles, el sistema implementa una **gestión de tareas basada en Kanban**, organizando las tareas en distintos estados:
+
+- 📌 **Pendiente:** Tareas que aún no han sido iniciadas.
+- ⏳ **En Progreso:** Tareas en desarrollo.
+- ✅ **Completadas:** Tareas finalizadas, registradas en el historial.
+
+El enfoque **Kanban** permite visualizar claramente el flujo de trabajo y la progresión de las tareas, asegurando una gestión eficiente y ordenada.
+
+---
 
 ### 2.4 Aplicaciones de Algoritmos con Estructuras de Datos
 
-El sistema implementa **listas enlazadas** para gestionar tareas, permitiendo operaciones eficientes de inserción, eliminación, y recorrido.
+Para la implementación del sistema, se utilizaron **estructuras de datos dinámicas** que permiten una gestión flexible y eficiente de las tareas.
+
+#### 🔹 2.4.1 **Lista Enlazada Simple**
+
+El sistema emplea una **Lista Enlazada Simple** para almacenar y gestionar las tareas. Se optó por esta estructura debido a sus ventajas en:
+
+- **Inserción y eliminación eficientes** sin necesidad de redimensionar estructuras de datos.
+- **Acceso secuencial óptimo**, permitiendo recorrer la lista de tareas en orden de ingreso.
+- **Flexibilidad en la gestión de nodos**, ya que las tareas pueden agregarse y eliminarse sin afectar la estructura general.
+
+📌 **Métodos clave de la Lista Enlazada:**
+
+- `agregarTarea(String descripcion, String prioridad)`: Inserta una nueva tarea en la lista.
+- `eliminarTarea(String descripcion)`: Elimina una tarea completada.
+- `buscarTarea(String descripcion)`: Encuentra una tarea específica en la lista.
+
+---
+
+#### 🔹 2.4.2 **Cola (FIFO - First In, First Out)**
+
+El **historial de tareas completadas** se gestiona mediante una **Cola (FIFO - First In, First Out)**, donde las tareas finalizadas se almacenan en orden cronológico.
+
+📌 **Ventajas del uso de una Cola en el historial:**
+
+- **Las tareas más antiguas se registran primero**, permitiendo un seguimiento ordenado.
+- **Facilita la revisión del progreso del usuario**, asegurando que todas las tareas finalizadas sean visibles.
+- **Evita desorden en la presentación de datos**, manteniendo la organización del sistema.
+
+📌 **Métodos clave de la Cola:**
+
+- `mostrarHistorialTareas()`: Muestra las tareas completadas en orden de finalización.
+
+---
 
 ## CAPÍTULO 3 – GESTIÓN DEL PROYECTO
 
 ### 3.1 Objetivos
 
 - **Objetivo General:**
-  Desarrollar un sistema en Java que permita gestionar tareas pendientes utilizando estructuras de datos dinámicas (colas con prioridad o listas enlazadas).
+  Desarrollar un sistema en Java que permita gestionar tareas pendientes de manera eficiente, utilizando estructuras de datos dinámicas como colas con prioridad o listas enlazadas para optimizar la organización y ejecución de tareas.
 
 - **Objetivos Específicos:**
-  - Implementar una estructura de datos dinámica adecuada para la gestión de tareas.
-  - Permitir al usuario agregar, listar y completar tareas.
-  - Ordenar las tareas según su prioridad (Alta, Media, Baja).
-  - Validar la funcionalidad del sistema mediante pruebas simples.
+  ✅ Implementar una estructura de datos dinámica que facilite la gestión eficiente de tareas.
+  ✅ Permitir que los usuarios agreguen, visualicen y completen tareas de forma intuitiva.
+  ✅ Ordenar las tareas según su nivel de prioridad (Alta, Media, Baja) para una mejor organización.
+  ✅ Validar el correcto funcionamiento del sistema mediante pruebas exhaustivas para asegurar su estabilidad y usabilidad.
 
 ### 3.2 Descripción del Problema
 
-El proyecto surge de la necesidad de organizar tareas en un entorno dinámico donde las prioridades cambian constantemente. La falta de un sistema de gestión eficiente puede generar desorganización y pérdida de control sobre las tareas pendientes.
+En un entorno dinámico, donde las prioridades de las tareas pueden cambiar constantemente, la falta de un sistema de gestión eficiente puede provocar:
+
+- Desorganización y pérdida de control sobre las tareas pendientes.
+- Dificultad para establecer prioridades, lo que puede generar retrasos en la ejecución de actividades importantes.
+- Falta de seguimiento del estado de las tareas, impidiendo evaluar el progreso de los pendientes.
+
+Para abordar esta problemática, el sistema de gestión de tareas implementará una estructura de datos optimizada que facilite la organización, priorización y seguimiento de tareas en tiempo real.
 
 ### 3.3 Alcance del Proyecto
 
-El sistema permitirá:
+📌 El sistema proporcionará las siguientes funcionalidades:
 
-- Registrar tareas con descripciones y prioridades.
-- Visualizar la lista de tareas pendientes.
-- Completar (eliminar) tareas según su prioridad.
-- Ordenar y buscar tareas de forma eficiente.
+✅ Registro de tareas:
+
+    Permitir a los usuarios crear nuevas tareas, especificando su descripción y prioridad.
+
+✅ Gestión y visualización de tareas:
+
+    Mostrar la lista de tareas pendientes de forma clara y ordenada.
+    Posibilidad de filtrar tareas según su prioridad.
+
+✅ Finalización de tareas:
+
+    Permitir a los usuarios marcar tareas como completadas, eliminándolas del listado principal.
+    Mantener un historial de tareas completadas para referencia futura.
+
+✅ Optimización de búsqueda y ordenamiento:
+
+    Implementar un mecanismo de búsqueda eficiente para localizar tareas específicas.
+    Ordenar automáticamente las tareas según su prioridad.
 
 ## CAPÍTULO 4 – IMPLEMENTACIÓN DE ESTRATEGIA
 
@@ -143,7 +219,7 @@ Se ha avanzado en la implementación de tareas de actualización, eliminación y
 
 ### 4.4 Desarrollo de la Aplicación
 
-La aplicación final integra todos los módulos siguiendo la arquitectura **MVC**, con una estructura de paquetes para `model`, `controller`, `view` y `clases`. Se asegura el correcto funcionamiento mediante pruebas de validación y manejo de errores. Se considera la posibilidad de implementar una **interfaz gráfica** en futuras versiones.
+La aplicación final integra todos los módulos siguiendo la arquitectura **MVC**, con una estructura de paquetes para `model`, `controller`, `view`, `clases` y `principal`. Se asegura el correcto funcionamiento mediante pruebas de validación y manejo de errores. Se considera la posibilidad de implementar una **interfaz gráfica** en futuras versiones.
 
 ---
 
@@ -271,3 +347,6 @@ El proyecto ha permitido aplicar conceptos teóricos de estructuras de datos en 
   ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-39-42-1230x791-upscaled.png)
   ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2004-26-32.png)
   ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2004-08-15.png)
+
+🔗 [Visualización en Canva](https://www.canva.com/design/DAGgAaqTLgs/QoBd7QM6oTtVLMi9DN8m6Q/edit?utm_content=DAGgAaqTLgs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
