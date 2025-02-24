@@ -201,8 +201,6 @@ Se utilizó la biblioteca **Apache PDFBox** para la generación del archivo PDF,
 - `agregarFooter()` → Inserta el **nombre del autor y la fecha/hora** de generación.
 - `escribirTareasEnPdf()` → Estructura las tareas en el documento.
 
-![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2004-08-15.png)
-
 ---
 
 ### 4.4.5 Personalización del Formato del PDF
@@ -222,7 +220,8 @@ Estos cambios garantizan una presentación más profesional del archivo.
 
 Para reforzar la autenticidad del documento generado, se incluyó una **marca de agua en el pie de página**, que indica la autoría del proyecto y la fecha/hora exacta en que se generó el PDF.
 
-_(Aquí podrías insertar una captura del PDF con la marca de agua)._
+![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2004-23-39.png)
+
 
 ---
 
