@@ -269,5 +269,5 @@ El proyecto ha permitido aplicar conceptos teóricos de estructuras de datos en 
   ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-38-53-1230x791-upscaled.png)
   ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-39-10-1230x791-upscaled.png)
   ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-02%2003-39-42-1230x791-upscaled.png)
-
-![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2004-08-15.png)
+  ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2004-26-32.png)
+  ![Descripción de la imagen](./Imagenes/Capturas%20de%20Pantalla/Captura%20desde%202025-02-24%2004-08-15.png)
