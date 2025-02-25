@@ -8,6 +8,7 @@
 📋 Optimizar Codigo | Prioridad: Alta
 📋 Limpiar Cuarto | Prioridad: Alta
 📋 Borrar Archivos de escritorio | Prioridad: Media
+📋 Revision Profesor Lunes | Prioridad: Alta
 
 ⏳ Tareas en Progreso:
 📭 No hay tareas en este estado.
