@@ -201,11 +201,11 @@ public class GestorTareas {
                 contentStream.showText("Sistema de Gestión de Tareas Pendientes");
                 contentStream.endText();
 
-                // 🔹 Agregar el contenido después del encabezado
+                // 🔹 Agregar las tareas en orden de ESTADO y luego en orden de PRIORIDAD
                 int y = 700;
-                y = escribirTareasEnPdf(contentStream, "Tareas Pendientes:", "Pendiente", y, font);
-                y = escribirTareasEnPdf(contentStream, "Tareas en Progreso:", "En Progreso", y, font);
-                y = escribirTareasEnPdf(contentStream, "Tareas Completadas:", "Completada", y, font);
+                y = escribirTareasEnPdf(contentStream, "TAREAS PENDIENTES:", "Pendiente", y, font);
+                y = escribirTareasEnPdf(contentStream, "TAREAS EN PROGRESO:", "En Progreso", y, font);
+                y = escribirTareasEnPdf(contentStream, "TAREAS COMPLETADAS:", "Completada", y, font);
 
                 // 🔹 Agregar el footer con "Proyecto hecho por Daniel Huaman"
                 agregarFooter(contentStream, page, font);
@@ -318,45 +318,48 @@ public class GestorTareas {
      * Método auxiliar escribe las tareas dentro del PDF en la posición
      * correcta.
      */
-    private int escribirTareasEnPdf(PDPageContentStream contentStream, String titulo, String estado, int startY, PDType0Font font) throws IOException {
-        contentStream.setFont(font, 14); // Tamaño de fuente mayor
-        int y = startY;
+    private int escribirTareasEnPdf(PDPageContentStream contentStream, String titulo, String estado, int y, PDType0Font font) throws IOException {
+        contentStream.setFont(font, 12); // 🔹 Tamaño del texto en el PDF
 
-        // Escribir el título de la sección
+        // 🔹 Escribir el título del ESTADO (Ejemplo: "TAREAS PENDIENTES:")
         contentStream.beginText();
-        contentStream.newLineAtOffset(100, y);
-        contentStream.showText(eliminarEmojis(titulo));
+        contentStream.newLineAtOffset(50, y);
+        contentStream.showText(titulo); // 🔹 Sin emojis para evitar errores
         contentStream.endText();
+        y -= 20; // Espacio después del título
 
-        y -= 40; // Espacio después del título
+        // 🔹 Imprimir las tareas en orden de prioridad (Alta -> Media -> Baja)
+        y = imprimirTareasPorPrioridad(contentStream, "Alta", estado, y, font);
+        y = imprimirTareasPorPrioridad(contentStream, "Media", estado, y, font);
+        y = imprimirTareasPorPrioridad(contentStream, "Baja", estado, y, font);
 
-        boolean hayTareas = false;
+        return y - 20; // Espacio extra antes de la siguiente sección
+    }
+
+    private int imprimirTareasPorPrioridad(PDPageContentStream contentStream, String prioridad, String estado, int y, PDType0Font font) throws IOException {
         Nodo actual = lista.getCabeza();
+        boolean hayTareas = false;
+
         while (actual != null) {
-            if (actual.tarea.getEstado().equals(estado)) {
+            if (actual.tarea.getPrioridad().equalsIgnoreCase(prioridad) && actual.tarea.getEstado().equalsIgnoreCase(estado)) {
                 hayTareas = true;
-                String descripcionLimpia = eliminarEmojis(actual.tarea.getDescripcion());
-                String prioridadLimpia = eliminarEmojis(actual.tarea.getPrioridad());
-
                 contentStream.beginText();
-                contentStream.newLineAtOffset(120, y);
-                contentStream.showText(descripcionLimpia + " | Prioridad: " + prioridadLimpia);
+                contentStream.newLineAtOffset(70, y);
+                contentStream.showText(actual.tarea.getDescripcion() + " | Prioridad: " + actual.tarea.getPrioridad());
                 contentStream.endText();
-
-                y -= 30; // Espaciado entre cada tarea
+                y -= 20; // Espacio entre tareas
             }
             actual = actual.siguiente;
         }
 
         if (!hayTareas) {
             contentStream.beginText();
-            contentStream.newLineAtOffset(120, y);
-            contentStream.showText("No hay tareas en este estado.");
+            contentStream.newLineAtOffset(70, y);
+            contentStream.showText("No hay tareas en esta categoría.");
             contentStream.endText();
-            y -= 30;
+            y -= 20;
         }
 
-        y -= 50; // Espacio extra antes de la siguiente sección
         return y;
     }
 
@@ -520,8 +523,34 @@ public class GestorTareas {
             System.out.println("📌 No hay tareas pendientes.");
             return;
         }
+
+        // 🔹 Mostrar primero las tareas con prioridad ALTA
+        System.out.println("\n🔴 Tareas de Prioridad ALTA:");
+        actual = lista.getCabeza();
         while (actual != null) {
-            System.out.println("📋 " + actual.tarea.getDescripcion() + " | ⏫ Prioridad: " + actual.tarea.getPrioridad());
+            if ("Alta".equalsIgnoreCase(actual.tarea.getPrioridad())) {
+                System.out.println("📋 " + actual.tarea.getDescripcion() + " | ⏫ Prioridad: " + actual.tarea.getPrioridad());
+            }
+            actual = actual.siguiente;
+        }
+
+        // 🔹 Mostrar las tareas con prioridad MEDIA
+        System.out.println("\n🟡 Tareas de Prioridad MEDIA:");
+        actual = lista.getCabeza();
+        while (actual != null) {
+            if ("Media".equalsIgnoreCase(actual.tarea.getPrioridad())) {
+                System.out.println("📋 " + actual.tarea.getDescripcion() + " | ⏫ Prioridad: " + actual.tarea.getPrioridad());
+            }
+            actual = actual.siguiente;
+        }
+
+        // 🔹 Mostrar las tareas con prioridad BAJA
+        System.out.println("\n🔵 Tareas de Prioridad BAJA:");
+        actual = lista.getCabeza();
+        while (actual != null) {
+            if ("Baja".equalsIgnoreCase(actual.tarea.getPrioridad())) {
+                System.out.println("📋 " + actual.tarea.getDescripcion() + " | ⏫ Prioridad: " + actual.tarea.getPrioridad());
+            }
             actual = actual.siguiente;
         }
     }
