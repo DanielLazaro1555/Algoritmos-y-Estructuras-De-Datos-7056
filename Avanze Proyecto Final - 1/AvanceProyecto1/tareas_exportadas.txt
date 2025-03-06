@@ -1,17 +1,10 @@
 === Lista de Tareas ===
 
 📌 Tareas Pendientes:
-📋 Ejemplo | Prioridad: Media
-📋 Prueba | Prioridad: Baja
-📋 Diseñodeldocumento | Prioridad: Media
-📋 ModificarLogo | Prioridad: Alta
-📋 Optimizar Codigo | Prioridad: Alta
-📋 Limpiar Cuarto | Prioridad: Alta
-📋 Borrar Archivos de escritorio | Prioridad: Media
-📋 Revision Profesor Lunes | Prioridad: Alta
+📭 No hay tareas en este estado.
 
 ⏳ Tareas en Progreso:
-📭 No hay tareas en este estado.
+📋 Reunion con el docente | Prioridad: Alta
 
 ✅ Tareas Completadas:
 📭 No hay tareas en este estado.
